@@ -1,15 +1,17 @@
 "
 " FONT:
 " https://github.com/adobe-fonts/source-code-pro
-" 0
-" PLUGINS:
+" Instalar la font normal, ya con eso se usara.
+"
+" TAGS:
+" Para que los tags se actualicen automaticamente.
 " https://github.com/xolox/vim-misc
 " https://github.com/xolox/vim-easytags
 "
-" Para autocompletar:
+" AUTOCOMPLETAR:
 " https://github.com/Shougo/neocomplete.vim
 "
-" Para brincar a lineas:
+" MOVIMIENTO_RAPIDO:
 " https://github.com/easymotion/vim-easymotion
 "
 " Para usar:
@@ -17,19 +19,20 @@
 " Ejemplo:  ,,w (busca al inicio de todas las palabras)
 "           ,,fo (busca todas las o)
 "
-" Syntax Hilight en JS
+" JAVASCRIPT: 
 " https://github.com/pangloss/vim-javascript.git
 " https://github.com/jelera/vim-javascript-syntax
 "
-" Formateo y Aliniacion
+" FORMATEO_ALINIACION:
 " https://github.com/godlygeek/tabular
 "
 " Par usar:
 " :Tab /= (para alinear en base al signo =)
 " :Tab/: (para alinear en base al signo :)
-" :Tab /:\zs (para alinear en base al signo : pero colocandolo al final de la primera palabra -> palabra:     textoalineando)
+" :Tab /:\zs (para alinear en base al signo : pero colocandolo al final de la 
+" primera palabra -> palabra:     textoalineando)
 " 
-" GitGutter (para ver cambios en el gutter)
+" GIT:
 " https://github.com/airblade/vim-gitgutter
 "
 " Indent Guides:
@@ -37,7 +40,7 @@
 "
 " Para togglearlas: <leader>ig
 "
-" Para hacer surround:
+" Para Hacer Surround:
 " Normal mode
 " -----------
 " ds  - delete a surrounding
@@ -60,17 +63,19 @@
 " <CTRL-g>s - same as <CTRL-s>
 " <CTRL-g>S - same as <CTRL-s><CTRL-s>
 "
-" Alternar entre archivos .c y .h
+" Alternar Entre Archivos:
+" .c y .h
 " http://www.vim.org/scripts/script.php?script_id=31
 "
-" Usar: :A para alternar
+" Para usar: :A para alternar
 " 
-"
-" UNDO-TREE, historial de UNDO tipo arbol
+" UNDOTREE:
+" historial de UNDO tipo arbol
 "
 " https://github.com/mbbill/undotree
 " En este vimrc se mapea a <leader>8
 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Numeros relativos
 set relativenumber

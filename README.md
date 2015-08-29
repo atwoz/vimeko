@@ -1,0 +1,2 @@
+# vimeko
+My VIM Configuration

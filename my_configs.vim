@@ -1,4 +1,7 @@
 "
+" FONT:
+" https://github.com/adobe-fonts/source-code-pro
+" 0
 " PLUGINS:
 " https://github.com/xolox/vim-misc
 " https://github.com/xolox/vim-easytags
@@ -160,7 +163,6 @@ inoremap $# /**/<esc>hha<CR><CR><BS><BS><esc>kA<TAB>
 """""""""""""" UNDO """"""""""""""""
 set undolevels = 1000 "maximum number of changes that can be undone
 set undoreload = 10000 "maximum number lines to save for undo on a buffer reload
-
 
 
 

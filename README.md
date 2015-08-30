@@ -52,6 +52,41 @@ ctags --help
 ## FONT
 Install the [Source Code Pro](https://github.com/adobe-fonts/source-code-pro) font
 
+## Searching (using Ack)
+It's possible to search inside all the files in the project (tags file is required) using Ack. 
+You need to have Ack installed and in the $PATH variable to be able to use it inside VIM.
+
+To Install ACK do the following:
+
+**MAC** Required homebrew
+
+```
+brew install ack 
+```
+
+**LINUX**
+
+```
+apt-get install ack
+```
+
+**WINDOWS**
+
+First install [Strawberry Perl](http://strawberryperl.com/)
+
+Then just type in the windows CMD Terminal the following:
+Make sure you are in C:\ path when executing the following command.
+```
+cpan -f App::Ack
+```
+
+**USAGE**
+
+Simply place the cursor in the word you want to search and type:
+```
+:Ack
+```
+
 ## Useful Commands
 ```
 guu           : lowercase line

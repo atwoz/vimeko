@@ -58,7 +58,7 @@ You need to have Ack installed and in the $PATH variable to be able to use it in
 
 To Install ACK do the following:
 
-**MAC** Required homebrew
+**MAC** Requires homebrew
 
 ```
 brew install ack 

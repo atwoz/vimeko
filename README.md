@@ -17,16 +17,16 @@ I had some trouble getting NeoComplete working on GVIM on Windows. You can use t
 [GVIM 7.4.xx with LUA](https://github.com/atwoz/gvim-win-tags)
 
 ## CAPS LOCK MAPPING
-It is really useful to map the CAPLOCK key to something else, I prefer to map it to CONTROL (thanks to [LARSX](https://github.com/larsx2))
+It is really useful to map the CAPLOCK key to something else, I prefer to map it to CONTROL (thanks to [larsx2](https://github.com/larsx2)).
 Some other people prefer ESC.
 
-*MAC*
+**MAC**
 Under System Preferences > Keyboard, You have an option to MAP some of the keys. It's really easy.
 
-*WINDOWS*
+**WINDOWS**
 I used [KeyTweak](http://www.bleepingcomputer.com/download/keytweak/)
 
-*Linux*
+**Linux**
 I used [Gnome Tweak Tool](https://apps.ubuntu.com/cat/applications/gnome-tweak-tool/)
 
 ## Autocomplete

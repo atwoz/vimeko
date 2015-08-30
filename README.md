@@ -85,6 +85,39 @@ S   : in visual mode, add a surrounding but place text on new line + indent it
 ```
 <CTRL-s>                             : in insert mode, add a surrounding
 <CTRL-s><CTRL-s>                     : in insert mode, add a new line + surrounding + indent
-<CTRL-g>s - same as <CTRL-s>
-<CTRL-g>S - same as <CTRL-s><CTRL-s>
+<CTRL-g>s                            : same as <CTRL-s>
+<CTRL-g>S                            : same as <CTRL-s><CTRL-s>
 ```
+
+## Alternate between .c and .h files
+This uses the Alternate plugin
+```
+:A      : Alternate between .c and .h file
+```
+
+## Toggle UNDO-TREE
+This uses the Undo Tree Plugin
+```
+,8      : Toggles ON and OFF the Undo Tree
+```
+
+## Toggle TagBar
+This uses the TagBar plugin (shows current file Tags)
+```
+,9      : Toggles ON and OFF the TagBar
+```
+
+## EASYMOTION
+This uses the EasyMotion Plugin (like f in Vimium)
+```
+,,w          : Jump to the beginning of a word
+,,fo         : Jump to a letter o (instead of o, you could use ,,f<any symbol>)
+,,<whatever> : Make your own combos
+```
+
+## ALIGNMENT
+This usees de Tabular plugin to align blocks of text
+```
+:Tab /=             : Aligns a block of text using the = sign
+:Tab /:\zs          : Aligns a block of text using the : sign but placing the : after the word
+:Tab /<any word>    : Aligns a block of text using <any word> as reference

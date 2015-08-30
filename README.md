@@ -16,6 +16,19 @@ Replace the *~/.vim_runtime* content with all the files in this REPO
 I had some trouble getting NeoComplete working on GVIM on Windows. You can use the following copy of GVIM if you also have trouble.
 [GVIM 7.4.xx with LUA](https://github.com/atwoz/gvim-win-tags)
 
+## CAPS LOCK MAPPING
+It is really useful to map the CAPLOCK key to something else, I prefer to map it to CONTROL (thanks to [LARSX](https://github.com/larsx2))
+Some other people prefer ESC.
+
+*MAC*
+Under System Preferences > Keyboard, You have an option to MAP some of the keys. It's really easy.
+
+*WINDOWS*
+I used [KeyTweak](http://www.bleepingcomputer.com/download/keytweak/)
+
+*Linux*
+I used [Gnome Tweak Tool](https://apps.ubuntu.com/cat/applications/gnome-tweak-tool/)
+
 ## Autocomplete
 
 Ctags is required for autocomplete.
@@ -93,6 +106,13 @@ S   : in visual mode, add a surrounding but place text on new line + indent it
 <CTRL-g>S                            : same as <CTRL-s><CTRL-s>
 ```
 
+## Nerd Tree
+File Navigation using the nerdtree plugin
+```
+,nn     : Opens the Nerd Tree
+?       : Nerd Tree commands are there for Reference
+```
+
 ## Alternate between .c and .h files
 This uses the Alternate plugin
 ```
@@ -166,6 +186,8 @@ Ctrl + <hjkl>   : Move between windows using hjkl
 ## Other Mappings
 ```
 ,w          : Quick Save file
+<space>     : Search
+<c-space>   : Sarch backward
 ```
 
 ## Marks
@@ -176,4 +198,3 @@ m<A-Z>      : Same as above but the scope is global. You can jump between files 
 '<a-zA-z>   : Jump to the marked line and place the cursor at the beginning of the line.
 `<a-zA-z>   : Jump to the marked line and place the cursor at the exact mark spot.
 ```
-

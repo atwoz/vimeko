@@ -32,6 +32,11 @@ au FileType javascript imap <c-a> alert();<esc>hi
 au FileType javascript inoremap <buffer> $r return 
 au FileType javascript inoremap <buffer> $f //--- PH ----------------------------------------------<esc>FP2xi
 
+autocmd Filetype html         setlocal ts=2 sw=2 expandtab
+autocmd Filetype javascript   setlocal ts=2 sw=2 sts=0 expandtab
+autocmd Filetype coffeescript setlocal ts=2 sw=2 sts=0 expandtab
+autocmd Filetype jade         setlocal ts=2 sw=2 sts=0 expandtab
+
 function! JavaScriptFold() 
     setl foldmethod=syntax
     setl foldlevelstart=1

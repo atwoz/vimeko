@@ -121,3 +121,35 @@ This usees de Tabular plugin to align blocks of text
 :Tab /=             : Aligns a block of text using the = sign
 :Tab /:\zs          : Aligns a block of text using the : sign but placing the : after the word
 :Tab /<any word>    : Aligns a block of text using <any word> as reference
+
+## COMMENTING
+To comment code.
+
+In Visual Mode
+```
+gc      : Comments the selected text
+```
+
+In Normal Mode
+```
+gcc     : Comment the current line
+gcu     : Uncomment the current line
+```
+
+## TABS
+Using tabs
+
+```
+,tn         : Creates a new tab
+,tc         : Closes the current tab
+,to         : Closes all the tabs except the current one
+,<1-5>      : Jumps to the tab number <x>
+,0          : Jumos to the last tab
+```
+
+## WINDOWS
+```
+Ctrl + <hjkl>   : Move between windows using hjkl
+<c-w> + <HJKL>  : Moves window
+```
+

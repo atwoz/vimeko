@@ -12,6 +12,10 @@ sh ~/.vim_runtime/install_awesome_vimrc.sh
 
 Replace the *~/.vim_runtime* content with all the files in this REPO
 
+## GVIM on Windows
+I had some trouble getting NeoComplete working on GVIM on Windows. You can use the following copy of GVIM if you also have trouble.
+[GVIM 7.4.xx with LUA](https://github.com/atwoz/gvim-win-tags)
+
 ## Autocomplete
 
 Ctags is required for autocomplete.

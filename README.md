@@ -168,3 +168,12 @@ Ctrl + <hjkl>   : Move between windows using hjkl
 ,w          : Quick Save file
 ```
 
+## Marks
+Marks are useful when you want to jump to a specific part of a File or to antother file quickly.
+```
+m<a-z>      : Create a mark at the current cursor position by the name <a-z>. The scope is only inside the file.
+m<A-Z>      : Same as above but the scope is global. You can jump between files using these types of marks.
+'<a-zA-z>   : Jump to the marked line and place the cursor at the beginning of the line.
+`<a-zA-z>   : Jump to the marked line and place the cursor at the exact mark spot.
+```
+

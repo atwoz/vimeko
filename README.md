@@ -121,6 +121,7 @@ This usees de Tabular plugin to align blocks of text
 :Tab /=             : Aligns a block of text using the = sign
 :Tab /:\zs          : Aligns a block of text using the : sign but placing the : after the word
 :Tab /<any word>    : Aligns a block of text using <any word> as reference
+```
 
 ## COMMENTING
 To comment code.

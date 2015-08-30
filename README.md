@@ -21,12 +21,15 @@ It is really useful to map the CAPLOCK key to something else, I prefer to map it
 Some other people prefer ESC.
 
 **MAC**
+
 Under System Preferences > Keyboard, You have an option to MAP some of the keys. It's really easy.
 
 **WINDOWS**
+
 I used [KeyTweak](http://www.bleepingcomputer.com/download/keytweak/)
 
 **Linux**
+
 I used [Gnome Tweak Tool](https://apps.ubuntu.com/cat/applications/gnome-tweak-tool/)
 
 ## Autocomplete

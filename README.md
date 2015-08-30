@@ -140,6 +140,11 @@ In Normal Mode
 gcc     : Comment the current line
 gcu     : Uncomment the current line
 ```
+In Insert Mode (/* C Comment Style */)
+```
+$$      : Adds a /*  */ comment and places cursor inside
+$#      : Adds a /*  */ BLOCK Comment and places cursor in the right place
+```
 
 ## TABS
 Using tabs
@@ -156,5 +161,10 @@ Using tabs
 ```
 Ctrl + <hjkl>   : Move between windows using hjkl
 <c-w> + <HJKL>  : Moves window
+```
+
+## Other Mappings
+```
+,w          : Quick Save file
 ```
 

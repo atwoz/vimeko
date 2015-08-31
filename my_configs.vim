@@ -131,6 +131,15 @@ if !exists('g:neocomplete#keyword_patterns')
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
+" Con esto evitamos que el NeoComplete entre en accion cuando tenemos ulticursores
+function! Multiple_cursors_before()
+    exe 'NeoCompleteDisable'
+endfunction
+
+function! Multiple_cursors_after()
+    exe 'NeoCompleteEnable'
+endfunction
+
 """""""""""""" SYNTASTIC """"""""""""""
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
@@ -166,6 +175,4 @@ inoremap $# /**/<esc>hha<CR><CR><BS><BS><esc>kA<TAB>
 
 """""""""""""" ACK """"""""""""""""
 let g:ack_default_options = " -s -H --nocolor --nogroup --column --smart-case --known-types --ignore-dir=build --ignore-dir=disassembly --ignore-dir=debug --ignore-dir=dist --ignore-dir=nbproject"
-
-
 

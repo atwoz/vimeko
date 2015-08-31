@@ -131,7 +131,6 @@ if !exists('g:neocomplete#keyword_patterns')
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-
 """""""""""""" SYNTASTIC """"""""""""""
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
@@ -165,8 +164,8 @@ inoremap $$ /*<space><space>*/<esc>hhi
 inoremap $# /**/<esc>hha<CR><CR><BS><BS><esc>kA<TAB>
 
 
-"""""""""""""" UNDO """"""""""""""""
-set undolevels = 1000 "maximum number of changes that can be undone
-set undoreload = 10000 "maximum number lines to save for undo on a buffer reload
+"""""""""""""" ACK """"""""""""""""
+let g:ack_default_options = " -s -H --nocolor --nogroup --column --smart-case --known-types --ignore-dir=build --ignore-dir=disassembly --ignore-dir=debug --ignore-dir=dist --ignore-dir=nbproject"
+
 
 

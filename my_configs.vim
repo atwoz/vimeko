@@ -40,6 +40,14 @@
 "
 " Para togglearlas: <leader>ig
 "
+" AUTO INDENT PASTE:
+" Para que al user p y P, lo que pegues tenga indentacion correcta
+" https://github.com/sickill/vim-pasta
+" 
+" MATCHIT:
+" Extiende la funcionalidad de %, para que tambien funcione con tags html, xml, etc.
+" https://github.com/tmhedberg/matchit
+"
 " Para Hacer Surround:
 " Normal mode
 " -----------
@@ -176,3 +184,5 @@ inoremap $# /**/<esc>hha<CR><CR><BS><BS><esc>kA<TAB>
 """""""""""""" ACK """"""""""""""""
 let g:ack_default_options = " -s -H --nocolor --nogroup --column --smart-case --known-types --ignore-dir=build --ignore-dir=disassembly --ignore-dir=debug --ignore-dir=dist --ignore-dir=nbproject"
 
+" Mapeamos el F1 para cerrar el archivo
+map <F1> :q<CR>

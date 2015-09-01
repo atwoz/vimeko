@@ -87,6 +87,13 @@ Simply place the cursor in the word you want to search and type:
 :Ack
 ```
 
+**PERL WARNING**
+If you get the following perl warning in OSX **perl: warning: Setting locale failed**
+you can fix it by adding the following to you ~./zshrc and ~/.zshenv
+```
+export LC_ALL=en_US.UTF-8
+```
+
 ## Useful Commands
 ```
 guu           : lowercase line

@@ -52,6 +52,29 @@ ctags --help
 ## FONT
 Install the [Source Code Pro](https://github.com/adobe-fonts/source-code-pro) font
 
+## Syntax Highlighting
+I use syntastic for syntax hightlighting. Currently I disabled the Checkers for C since I haven't been
+able to make it work (because I do embedded C). However it works with javascript and html but you
+need to install the checkers.
+
+**Javascript**
+
+Install JSHint and JSXHint
+```
+npm install -g jshint jsxhint
+```
+
+**HTML**
+
+Install Tidy
+
+*MAC*
+```
+brew update
+brew install tidy-html5
+```
+I already have the Checkers enabled in the config file. Change them if you want to use another one. 
+
 ## Searching (using Ack)
 It's possible to search inside all the files in the project (tags file is required) using Ack. 
 You need to have Ack installed and in the $PATH variable to be able to use it inside VIM.

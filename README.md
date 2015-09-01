@@ -244,3 +244,10 @@ m<A-Z>      : Same as above but the scope is global. You can jump between files 
 '<a-zA-z>   : Jump to the marked line and place the cursor at the beginning of the line.
 `<a-zA-z>   : Jump to the marked line and place the cursor at the exact mark spot.
 ```
+
+## HEX and DEC
+To convert between HEX and DEC in the editor, place the cursor on the number and use the following commands:
+```
+:Hex2dec    : Converts from hexadecimal to decimal
+:Dec2hex    : Converts from decimal to hexadecimal
+```

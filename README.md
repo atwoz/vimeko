@@ -12,6 +12,9 @@ sh ~/.vim_runtime/install_awesome_vimrc.sh
 
 Replace the *~/.vim_runtime* content with all the files in this REPO
 
+## ZSH
+If using zsh on OSX (and probably Linux) copy your .zshrc to .zshenv
+
 ## GVIM on Windows
 I had some trouble getting NeoComplete working on GVIM on Windows. You can use the following copy of GVIM if you also have trouble.
 [GVIM 7.4.xx with LUA](https://github.com/atwoz/gvim-win-tags)
@@ -28,7 +31,7 @@ Under System Preferences > Keyboard, You have an option to MAP some of the keys.
 
 I used [KeyTweak](http://www.bleepingcomputer.com/download/keytweak/)
 
-**Linux**
+**LINUX (UBUNTU)**
 
 I used [Gnome Tweak Tool](https://apps.ubuntu.com/cat/applications/gnome-tweak-tool/)
 
@@ -87,10 +90,10 @@ To Install ACK do the following:
 brew install ack 
 ```
 
-**LINUX**
+**LINUX (UBUNTU)**
 
 ```
-apt-get install ack
+cpan App:Ack
 ```
 
 **WINDOWS**
@@ -111,11 +114,12 @@ Simply place the cursor in the word you want to search and type:
 ```
 
 **PERL WARNING**
-If you get the following perl warning in OSX **perl: warning: Setting locale failed**
+If you get the following perl warning in OSX or LINUX **perl: warning: Setting locale failed**
 you can fix it by adding the following to you ~./zshrc and ~/.zshenv
 ```
 export LC_ALL=en_US.UTF-8
 ```
+
 
 ## Useful Commands
 ```

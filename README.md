@@ -172,9 +172,10 @@ This uses the TagBar plugin (shows current file Tags)
 ## EASYMOTION
 This uses the EasyMotion Plugin (like f in Vimium)
 ```
-,,w          : Jump to the beginning of a word
-,,fo         : Jump to a letter o (instead of o, you could use ,,f<any symbol>)
-,,<whatever> : Make your own combos
+,,w           : Jump to the beginning of a word
+,,fo          : Jump to a letter o (instead of o, you could use ,,f<any symbol>)
+,,<whatever>  : Make your own combos
+,,s<whatever> : Make your own combo
 ```
 
 ## ALIGNMENT

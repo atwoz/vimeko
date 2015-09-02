@@ -65,6 +65,8 @@ If you need *help*, type:
 ```
 ctags --help
 ```
+**Javascript Tags**
+If using ctags with javascript, I recommend placing the *.ctags* file I have in the ctags directory in the folder you want to create the tags.
 
 ## FONT
 Install the [Source Code Pro](https://github.com/adobe-fonts/source-code-pro) font

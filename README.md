@@ -55,6 +55,12 @@ To use, navigate to the root of your proyect and exec:
 ```
 ctags -R --languages=<your language, for example 'c'>
 ``` 
+
+EXAMPLE:
+```
+ctags -R --exclude=node_modules --languages=javascript
+```
+
 If you need *help*, type:
 ```
 ctags --help

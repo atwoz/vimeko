@@ -43,6 +43,14 @@ Download [Exuberant Tags](http://ctags.sourceforge.net/)
 
 Make sure that ctags is in the *$PATH* variable
 
+**Install Ctags on OSX**
+OSX already comes with a version of Ctags but not Exuberant Ctags so we have to make an alias to fix this.
+Just run the following 2 commands:
+```
+brew install ctags
+alias ctags="`brew --prefix`/bin/ctags"
+```
+
 To use, navigate to the root of your proyect and exec:
 ```
 ctags -R --languages=<your language, for example 'c'>

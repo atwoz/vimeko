@@ -188,7 +188,7 @@ map <leader>8 :UndotreeToggle<CR>
 """""""""""""" SNIPPETS """"""""""""""""
 " Comentarios:
 inoremap $$ /*<space><space>*/<esc>hhi
-inoremap $# /**/<esc>hha<CR><CR><BS><BS><esc>kA<TAB>
+inoremap $# <CR><CR><CR><space>*/<esc>ki<space>*<esc>ki/*<esc>jA<tab>
 
 
 """""""""""""" ACK """"""""""""""""

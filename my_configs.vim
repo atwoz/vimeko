@@ -172,7 +172,8 @@ let g:syntastic_c_config_file=".vim_syntax"
 let g:javascript_enable_domhtmlcss = 1
 
 """""""""""""" GitGutter """"""""""""""""
-let g:gitgutter_realtime = 1
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
 let g:gitgutter_enabled = 1
 let g:gitgutter_signs = 1
 let g:gitgutter_highlight_lines = 0

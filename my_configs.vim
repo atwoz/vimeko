@@ -189,9 +189,11 @@ map <leader>8 :UndotreeToggle<CR>
 """""""""""""" SNIPPETS """"""""""""""""
 " Comentarios:
 inoremap $$ /*<space><space>*/<esc>hhi
-inoremap $# <CR><CR><CR><space>*/<esc>ki<space>*<esc>ki/*<esc>jA<tab>
+" inoremap $# <CR><CR><CR><space>*/<esc>ki<space>*<esc>ki/*<esc>jA<tab>
 
-
+inoremap $# /*<CR><CR>/<esc>kA<tab>
+    
+    
 """""""""""""" ACK """"""""""""""""
 let g:ack_default_options = " -s -H --nocolor --nogroup --column --smart-case --known-types --ignore-dir=build --ignore-dir=disassembly --ignore-dir=debug --ignore-dir=dist --ignore-dir=nbproject"
 
@@ -234,3 +236,6 @@ function! s:Hex2dec(line1, line2, arg) range
     echo (a:arg =~? '^0x') ? a:arg + 0 : ('0x'.a:arg) + 0
   endif
 endfunction
+
+" Remapeamos el : a ; para tener mas facil acceso
+map ; :

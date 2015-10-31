@@ -115,6 +115,10 @@ let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 
+" Easy Aligns
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
@@ -160,8 +164,8 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_enable_signs= 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_c_checkers = ['gcc']
-let g:syntastic_cpp_checkers = ['check']
+let g:syntastic_c_checkers = []
+let g:syntastic_cpp_checkers = []
 let g:syntastic_javascript_checkers = ['jsxhint']
 let g:syntastic_html_checkers = ['tidy']
 

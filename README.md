@@ -235,6 +235,12 @@ This usees de Tabular plugin to align blocks of text
 :Tab /:\zs          : Aligns a block of text using the : sign but placing the : after the word
 :Tab /<any word>    : Aligns a block of text using <any word> as reference
 ```
+I switched to Easy-Align, now do the following:
+```
+ga          : Starts easy align
+vipga=      : Aligns around the = the visually selected p
+gaip=       : Same as above
+vipga*=     : Align all occurrences of =
 
 ## COMMENTING
 To comment code.
@@ -294,3 +300,4 @@ To convert between HEX and DEC in the editor, place the cursor on the number and
 :Hex2dec    : Converts from hexadecimal to decimal
 :Dec2hex    : Converts from decimal to hexadecimal
 ```
+

@@ -197,6 +197,10 @@ inoremap $$ /*<space><space>*/<esc>hhi
 
 inoremap $# /*<CR><CR>/<esc>kA<tab>
     
+
+"""""""""""""" QUICK jumps """"""""""""""""
+map <leader>a <leader><leader>s
+
     
 """""""""""""" ACK """"""""""""""""
 let g:ack_default_options = " -s -H --nocolor --nogroup --column --smart-case --known-types --ignore-dir=build --ignore-dir=disassembly --ignore-dir=debug --ignore-dir=dist --ignore-dir=nbproject"

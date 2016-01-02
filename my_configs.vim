@@ -251,3 +251,5 @@ map ; :
 " Wildfire (seleccion)
 let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
 nmap <leader>s <Plug>(wildfire-quick-select)
+
+set colorcolumn=80

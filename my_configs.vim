@@ -107,13 +107,13 @@ set tags=tags;
 
 "****************** configure neocomplete **************************
 " Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
+" let g:acp_enableAtStartup = 0
 " Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
+" let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
-let g:neocomplete#enable_smart_case = 1
+" let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
+" let g:neocomplete#sources#syntax#min_keyword_length = 3
 
 " Easy Aligns
 xmap ga <Plug>(EasyAlign)
@@ -121,14 +121,14 @@ nmap ga <Plug>(EasyAlign)
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplete#close_popup() . "\<CR>"
+" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+" function! s:my_cr_function()
+  " return neocomplete#close_popup() . "\<CR>"
   " For no inserting <CR> key.
-  return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-endfunction
+  " return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+" endfunction
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -138,18 +138,18 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 "" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+" if !exists('g:neocomplete#keyword_patterns')
+    " let g:neocomplete#keyword_patterns = {}
+" endif
+" let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
 " Con esto evitamos que el NeoComplete entre en accion cuando tenemos ulticursores
 function! Multiple_cursors_before()
-    exe 'NeoCompleteDisable'
+    " exe 'NeoCompleteDisable'
 endfunction
 
 function! Multiple_cursors_after()
-    exe 'NeoCompleteEnable'
+    " exe 'NeoCompleteEnable'
 endfunction
 
 """""""""""""" SYNTASTIC """"""""""""""
@@ -253,3 +253,18 @@ let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
 nmap <leader>s <Plug>(wildfire-quick-select)
 
 set colorcolumn=80
+
+" YouCompleteME
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_collect_identifiers_from_tags_files = 1
+
+" color_coded (para sintax highliting en c, c++, objC)
+let g:color_coded_enabled = 1
+let g:color_coded_filetypes = ['c']
+
+
+"" Ultisnips
+let g:UltiSnipsExpandTrigger= "<c-tab>"
+let g:UltiSnipsListSnippets= "<c-s-tab>"
+
+

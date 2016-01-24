@@ -53,12 +53,13 @@ alias ctags="`brew --prefix`/bin/ctags"
 
 To use, navigate to the root of your proyect and exec:
 ```
-ctags -R --languages=<your language, for example 'c'>
+ctags -R --languages=<your language, for example 'c'> --fields=+l 
 ``` 
 
 EXAMPLE:
 ```
-ctags -R --exclude=node_modules --languages=javascript
+ctags -R --languages=c --fields=+l --langmap=c:.c.h
+ctags -R --exclude=node_modules --fields=+l --languages=javascript
 ```
 
 If you need *help*, type:
@@ -300,4 +301,26 @@ To convert between HEX and DEC in the editor, place the cursor on the number and
 :Hex2dec    : Converts from hexadecimal to decimal
 :Dec2hex    : Converts from decimal to hexadecimal
 ```
+
+## ULTISNIP
+To use ultisnip with YCM, just start typing a snippet shortcut and once it
+displays the options, cycle through them and hit <c-tab> to trigger one. To
+cycle between the snippet parts just hit <c-j> and <c-k>. Ultisnip requieres
+vim-snippets, you can see the list of available snippets there.
+```
+<c-s-tab>   : Get a list of options
+<c-tab>     : Select snippet
+<c-j>       : Cycle through snippet parameters forward
+<c-k>       : Cycle through snippet parameters backward
+```
+
+## YCM
+To use YCM to it's full potential, you need to have certain config files in
+the project root. 
+
+For C, add:
+.ycm_extra_conf.py
+
+For JS, add:
+.tern_project
 

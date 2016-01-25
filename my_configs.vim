@@ -208,6 +208,7 @@ let g:ack_default_options = " -s -H --nocolor --nogroup --column --smart-case --
 " Mapeamos el F1 para cerrar el archivo
 map <F1> :q<CR>
 
+
 " Funciones para Convertir de Hex <-> DEC
 command! -nargs=? -range Dec2hex call s:Dec2hex(<line1>, <line2>, '<args>')
 function! s:Dec2hex(line1, line2, arg) range
@@ -257,6 +258,7 @@ set colorcolumn=80
 " YouCompleteME
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_add_preview_to_completeopt = 0
 
 " color_coded (para sintax highliting en c, c++, objC)
 let g:color_coded_enabled = 1
@@ -267,4 +269,10 @@ let g:color_coded_filetypes = ['c']
 let g:UltiSnipsExpandTrigger= "<c-tab>"
 let g:UltiSnipsListSnippets= "<c-s-tab>"
 
+" Cierra el scratch automaticamente al elegir la opcion de YCM
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
+" Splits mas naturales, abre el split a la derecha o abajo
+set splitbelow
+set splitright

@@ -324,3 +324,22 @@ For C, add:
 For JS, add:
 .tern_project
 
+## Searching, replacing
+In Normal Mode
+```
+<leader>g   :Ag Searching
+```
+in Visual Mode
+```
+<leader>gv  :Ag the selected text
+<leader>r   :Replace selected text
+```
+When using Ag to search, you can use cope to cycle through the results.
+Once you do a Search, use the following:
+```
+<leader>cc  :Show results
+<leader>n   :Jump to next result
+<ledaer>p   :Jump to previous result
+```
+
+

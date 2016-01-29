@@ -251,7 +251,7 @@ map ; :
 
 " Wildfire (seleccion)
 let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
-nmap <leader>s <Plug>(wildfire-quick-select)
+nmap <leader>l <Plug>(wildfire-quick-select)
 
 set colorcolumn=80
 
@@ -276,3 +276,32 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 " Splits mas naturales, abre el split a la derecha o abajo
 set splitbelow
 set splitright
+
+" Para copiar y hacer append a un registro. Util para ir copiando varias cosas
+" que no estan contiguas y luego pegarlas en una sola operacion (prototipos
+" en c.)
+"
+" Esto lo hace mejor el plugin Repeatable Yank... con gy y gyy, la primera vez
+" tienes que especificar el registro, asi que si creamos ese mapping ya que
+" es util
+map <leader>y "tgyy
+xmap <leader>y "tgy
+" noremap <leader>T "tyy
+" noremap <leader>t "Tyy
+" vnoremap <leader>T "ty
+" vnoremap <leader>t "Ty
+
+" lo mismo pero borrando (aqui si tenemos que definir el comando de pegar)
+noremap <leader>R "rdd
+noremap <leader>rd "Rdd
+vmap <leader>R "rd
+vmap <leader>rd "Rd
+noremap <leader>rp "Rp
+noremap <leader>rP "RP
+vmap <leader>rp "Rp
+
+
+" Para borrar y colocar lo borrado en el hoyo negro. Util para cuando no
+" quieres perder la referencia de lo que yankeaste.
+map <leader>d "_dd
+xmap <leader>d "_d

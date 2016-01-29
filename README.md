@@ -341,5 +341,34 @@ Once you do a Search, use the following:
 <leader>n   :Jump to next result
 <ledaer>p   :Jump to previous result
 ```
+## Accumulative Yanking & Deleting with repeat
+With the Repeatable Yank plugin and with some custom mappings we can
+do an accumulative yanking/deleting that can be repeated with .
+It works by placing the conents in a custom register and then pasting it.
+
+To do Accumulative yanking:
+```
+<leader>y   : Always call this first to clear the register and copy the line
+gyy         : Copy subsequent lines
+gy          : Copy visual selected item
+gyiw        : Copy the inner word (works with other commands)
+p           : paste everything you copied
+```
+
+To do accumulative deleting (useful for moving things around):
+```
+<leader>R   : Call this first to delete de current line
+<leader>rd  : call this after to delete and accumulate more lines
+<leader>rp  : Paste everything that was delete.
+```
+
+The important thing is that these mappings can be repeated with dot.
+
+## Black Hole deleting
+When you want to delete something but you don't want to overwrite what you just
+yanked then use the following (it uses the "_ register):
+```
+<leader>d   : Delete and place on the underscore register
+```
 
 

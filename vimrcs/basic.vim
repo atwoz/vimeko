@@ -218,7 +218,10 @@ map k gk
 
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
 map <space> /
-map <c-space> ?
+" map <c-space> <esc>
+
+" Map auto complete 
+" inoremap <c-space> <esc>
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>

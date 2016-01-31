@@ -95,6 +95,19 @@ brew install tidy-html5
 ```
 I already have the Checkers enabled in the config file. Change them if you want to use another one. 
 
+## COLOR CODED (needs installation)
+you need to run the following to install color coded
+```
+cd ~/.vim/bundle/color_coded
+mkdir build && cd build
+cmake ..
+make && make install # Compiling with GCC is preferred, ironically
+# Clang works on OS X, but has mixed success on Linux and the BSDs
+
+# Cleanup afterward; frees several hundred megabytes
+make clean && make clean_clang
+```
+
 ## Searching (using Ack)
 It's possible to search inside all the files in the project (tags file is required) using Ack. 
 You need to have Ack installed and in the $PATH variable to be able to use it inside VIM.

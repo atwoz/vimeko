@@ -95,10 +95,14 @@ brew install tidy-html5
 ```
 I already have the Checkers enabled in the config file. Change them if you want to use another one. 
 
+## YouCompleteMe (needs installation)
+Requires installation!!! Check the official repo for details
+
 ## COLOR CODED (needs installation)
 you need to run the following to install color coded
 ```
-cd ~/.vim/bundle/color_coded
+git clone https://github.com/jeaye/color_coded ~/.vim_runtime/sources_non_forked/color_coded
+cd ~/.vim_runtime/sourcs_non_forked/color_coded
 mkdir build && cd build
 cmake ..
 make && make install # Compiling with GCC is preferred, ironically

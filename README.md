@@ -242,6 +242,7 @@ ga          : Starts easy align
 vipga=      : Aligns around the = the visually selected p
 gaip=       : Same as above
 vipga*=     : Align all occurrences of =
+```
 
 ## COMMENTING
 To comment code.

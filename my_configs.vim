@@ -305,3 +305,13 @@ vmap <leader>rp "Rp
 " quieres perder la referencia de lo que yankeaste.
 map <leader>d "_dd
 xmap <leader>d "_d
+
+" CtrlSF Para buscar en multoples archivos (require Ag o Ack)
+nmap     <C-k>f <Plug>CtrlSFPrompt
+vmap     <C-k>f <Plug>CtrlSFVwordPath
+vmap     <C-k>F <Plug>CtrlSFVwordExec
+nmap     <C-k>n <Plug>CtrlSFCwordPath
+nmap     <C-k>p <Plug>CtrlSFPwordPath
+nnoremap <C-k>o :CtrlSFOpen<CR>
+nnoremap <C-k>t :CtrlSFToggle<CR>
+inoremap <C-k>t <Esc>:CtrlSFToggle<CR>

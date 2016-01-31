@@ -371,4 +371,30 @@ yanked then use the following (it uses the "_ register):
 <leader>d   : Delete and place on the underscore register
 ```
 
+## Searching in multiple files easily with CtrlSF Plugin
+This requires Ag or Ack but it's the best option I have found so far to search
+in multiple files and easily edit the results and move between them.
 
+Once the CtrlSF window is open you can do the following actions:
+```
+Enter   :Open corresponding file of current line in the window which CtrlSF is launched from.
+<C-O>   :Like Enter but open file in a horizontal split window.
+t       :Like Enter but open file in a new tab.
+p       :Like Enter but open file in a preview window.
+O       :Like Enter but always leave CtrlSF window opening.
+T       :Like t but focus CtrlSF window instead of new opened tab.
+q       :Quit CtrlSF window.
+<C-J>   :Move cursor to next match.
+<C-K>   :Move cursor to previous match.
+```
+
+Custom Mappings:
+```
+<C-k>f  : Writes CtrlSF in the prompt
+<C-k>f  : Writes CtrlSF and places the visually selected text after
+<C-k>F  : Same as above but also runs the search
+<C-k>n  : Same as the f option but does the search for the word under the cursor
+<C-k>p  : Performs a search on the last search pattern used when finding in vim
+<C-k>o  : Open CtrlSF window
+<C-k>t  : Toggle CtrlSF window
+```

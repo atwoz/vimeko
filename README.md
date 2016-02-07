@@ -173,6 +173,7 @@ G=gg          : auto (re)indent entire document
 <c-x>         : Autocomplete mode (while in insert)
 <c-x><c-l>    : Autocomplete a full line (while in insert mode)
 <c-w><c-]>    : Open tag in split window
+<
 <c-w><c-}>    : Open tag in split without losing original focus
 [I            : Searches file for word under cursor and opens Cwind. with results
 ```

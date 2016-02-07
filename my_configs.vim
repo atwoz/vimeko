@@ -178,7 +178,7 @@ let g:javascript_enable_domhtmlcss = 1
 """""""""""""" GitGutter """"""""""""""""
 let g:gitgutter_realtime = 0
 let g:gitgutter_eager = 0
-let g:gitgutter_enabled = 1
+let g:gitgutter_enabled = 0
 let g:gitgutter_signs = 1
 let g:gitgutter_highlight_lines = 0
 
@@ -264,7 +264,6 @@ let g:ycm_add_preview_to_completeopt = 0
 let g:color_coded_enabled = 1
 let g:color_coded_filetypes = ['c']
 
-
 "" Ultisnips
 let g:UltiSnipsExpandTrigger= "<c-tab>"
 let g:UltiSnipsListSnippets= "<c-s-tab>"
@@ -310,8 +309,11 @@ xmap <leader>d "_d
 nmap     <C-k>f <Plug>CtrlSFPrompt
 vmap     <C-k>f <Plug>CtrlSFVwordPath
 vmap     <C-k>F <Plug>CtrlSFVwordExec
-nmap     <C-k>n <Plug>CtrlSFCwordPath
-nmap     <C-k>p <Plug>CtrlSFPwordPath
+nmap     <C-k>k <Plug>CtrlSFCwordPath
+nmap     <C-k>? <Plug>CtrlSFPwordPath
 nnoremap <C-k>o :CtrlSFOpen<CR>
 nnoremap <C-k>t :CtrlSFToggle<CR>
 inoremap <C-k>t <Esc>:CtrlSFToggle<CR>
+
+" Para que Ctrls use el root de tu poryecto (donde esta el .git)
+let g:ctrlsf_default_root = 'project'

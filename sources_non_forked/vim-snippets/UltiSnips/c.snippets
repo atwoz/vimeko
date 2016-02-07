@@ -96,4 +96,35 @@ snippet fund "function declaration" b
 ${1:void} ${2:function_name}(${3});
 endsnippet
 
+snippet wozch
+/****************************************************************************** 
+ *
+ * Copyright (C) Arteko Electronics SA de CV - Todos los derechos reservados
+ *
+ * Queda prohibido realizar copia de este documento por cualquier medio sin
+ * autorizacion por escrito de Arteko Electronics S.A. de C.V.
+ * Privado y Confidencial
+ *
+ * Autor Original: Arturo Mtz. Lavin v. <arturo@arteko.mx>
+ *
+ *****************************************************************************/
+	
+#ifndef ${1:`!p
+if not snip.c:
+	import random, string
+	name = re.sub(r'[^A-Za-z0-9]+','_', snip.fn).upper()
+	rand = ''.join(random.sample(string.ascii_letters+string.digits, 8))
+	snip.rv = ('%s_%s' % (name,rand)).upper()
+else:
+	snip.rv = snip.c`}
+#define $1
+
+#include "${2:common.h}"
+
+${3}
+
+#endif 
+endsnippet
+
 # vim:ft=snippets:
+

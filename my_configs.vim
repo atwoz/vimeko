@@ -193,9 +193,11 @@ map <leader>8 :UndotreeToggle<CR>
 """""""""""""" SNIPPETS """"""""""""""""
 " Comentarios:
 inoremap $$ /*<space><space>*/<esc>hhi
-" inoremap $# <CR><CR><CR><space>*/<esc>ki<space>*<esc>ki/*<esc>jA<tab>
-
 inoremap $# /*<CR><CR>/<esc>kA<tab>
+
+" Pone ; al final de la linea sin mover el cursor de su lugar
+inoremap ;; <esc>mcA;<esc>`c 
+
     
 
 """""""""""""" QUICK jumps """"""""""""""""
@@ -317,3 +319,10 @@ inoremap <C-k>t <Esc>:CtrlSFToggle<CR>
 
 " Para que Ctrls use el root de tu poryecto (donde esta el .git)
 let g:ctrlsf_default_root = 'project'
+
+" Para ignorar ciertos archivos con contrlp
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.o,*.d,*.properties,nbproject     " MacOSX/Linux
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn|build|\_ext)$',
+  \ 'file': '\v\.(exe|so|dll|o|d)$',
+  \ }

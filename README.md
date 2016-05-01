@@ -102,7 +102,7 @@ Requires installation!!! Check the official repo for details
 you need to run the following to install color coded
 ```
 git clone https://github.com/jeaye/color_coded ~/.vim_runtime/sources_non_forked/color_coded
-cd ~/.vim_runtime/sourcs_non_forked/color_coded
+cd ~/.vim_runtime/sources_non_forked/color_coded
 mkdir build && cd build
 cmake ..
 make && make install # Compiling with GCC is preferred, ironically

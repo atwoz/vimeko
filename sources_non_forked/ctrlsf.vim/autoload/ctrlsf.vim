@@ -1,8 +1,8 @@
 " ============================================================================
-" Description: An ack/ag powered code search and view tool.
+" Description: An ack/ag/pt/rg powered code search and view tool.
 " Author: Ye Ding <dygvirus@gmail.com>
 " Licence: Vim licence
-" Version: 1.40
+" Version: 1.8.3
 " ============================================================================
 
 """""""""""""""""""""""""""""""""
@@ -11,12 +11,13 @@
 
 " remember what user is searching
 let s:current_query = ''
+let s:only_quickfix = 0
 
 " s:ExecSearch()
 "
 " Basic process: query, parse, render and display.
 "
-func! s:ExecSearch(args) abort
+func! s:ExecSearch(args, only_quickfix) abort
     try
         call ctrlsf#opt#ParseOptions(a:args)
     catch /ParseOptionsException/
@@ -34,12 +35,28 @@ func! s:ExecSearch(args) abort
         return -1
     endif
 
+    " Print error messages from backend (Debug Mode)
+    call ctrlsf#log#Debug("Errors reported by backend:\n%s",
+                \ ctrlsf#backend#LastErrors())
+
+    " Parsing
     call ctrlsf#db#ParseAckprgResult(output)
+
+    " Only populate and open the quickfix window
+    if a:only_quickfix
+      call setqflist(ctrlsf#db#MatchListQF())
+      botright copen
+      return
+    endif
+
     call ctrlsf#win#OpenMainWindow()
     call ctrlsf#win#Draw()
     call ctrlsf#buf#ClearUndoHistory()
     call ctrlsf#hl#HighlightMatch()
-    call cursor(1, 1)
+
+    " scroll up to top line
+    1normal z<CR>
+    call ctrlsf#NextMatch(0, 1)
 
     " populate quickfix and location list
     if g:ctrlsf_populate_qflist
@@ -50,7 +67,7 @@ endf
 
 " Search()
 "
-func! ctrlsf#Search(args) abort
+func! ctrlsf#Search(args, only_quickfix) abort
     let args = a:args
 
     " If no pattern is given, use word under the cursor
@@ -59,8 +76,9 @@ func! ctrlsf#Search(args) abort
     endif
 
     let s:current_query = args
+    let s:only_quickfix = a:only_quickfix
 
-    call s:ExecSearch(s:current_query)
+    call s:ExecSearch(s:current_query, s:only_quickfix)
 endf
 
 " Update()
@@ -69,7 +87,7 @@ func! ctrlsf#Update() abort
     if empty(s:current_query)
         return -1
     endif
-    call s:ExecSearch(s:current_query)
+    call s:ExecSearch(s:current_query, s:only_quickfix)
 endf
 
 " Open()
@@ -114,8 +132,12 @@ endf
 " Quit()
 "
 func! ctrlsf#Quit() abort
-    call ctrlsf#preview#ClosePreviewWindow()
-    call ctrlsf#win#CloseMainWindow()
+    if g:ctrlsf_confirm_unsaving_quit &&
+                \ !ctrlsf#buf#WarnIfChanged()
+        return
+    endif
+
+    call s:Quit()
 endf
 
 " OpenLocList()
@@ -143,6 +165,15 @@ func! ctrlsf#JumpTo(mode) abort
         return
     endif
 
+    if (a:mode ==# "open"
+                \ || a:mode ==# "split"
+                \ || a:mode ==# "vsplit"
+                \ || a:mode ==# "tab") &&
+                \ g:ctrlsf_confirm_unsaving_quit &&
+                \ !ctrlsf#buf#WarnIfChanged()
+        return
+    endif
+
     let lnum = line.lnum
     let col  = empty(match)? 0 : match.col
 
@@ -152,19 +183,27 @@ func! ctrlsf#JumpTo(mode) abort
         call s:OpenFileInWindow(file, lnum, col, 2, 0)
     elseif a:mode ==# 'split'
         call s:OpenFileInWindow(file, lnum, col, 1, 1)
+    elseif a:mode ==# 'vsplit'
+        call s:OpenFileInWindow(file, lnum, col, 1, 2)
     elseif a:mode ==# 'tab'
         call s:OpenFileInTab(file, lnum, col, 1)
     elseif a:mode ==# 'tab_background'
         call s:OpenFileInTab(file, lnum, col, 2)
     elseif a:mode ==# 'preview'
-        call s:PreviewFile(file, lnum, col)
+        call s:PreviewFile(file, lnum, col, 0)
+    elseif a:mode ==# 'preview_foreground'
+        call s:PreviewFile(file, lnum, col, 1)
     endif
 endf
 
 " s:NextMatch()
 "
-func! ctrlsf#NextMatch(forward) abort
-    let cur_vlnum     = line('.')
+" Move cursor to the next match after a line specified by 'lnum'.
+"
+" If given line number is -1, use current line instead.
+"
+func! ctrlsf#NextMatch(lnum, forward) abort
+    let cur_vlnum     = a:lnum == -1 ? line('.') : a:lnum
     let [vlnum, vcol] = ctrlsf#view#FindNextMatch(cur_vlnum, a:forward)
 
     if vlnum > 0
@@ -195,11 +234,12 @@ endf
 " About split:
 "
 " '0' means don't split by default unless there exists unsaved changes.
-" '1' means split in any case.
+" '1' means split horizontally.
+" '2' means split vertically
 "
 func! s:OpenFileInWindow(file, lnum, col, mode, split) abort
     if a:mode == 1 && g:ctrlsf_auto_close
-        call ctrlsf#Quit()
+        call s:Quit()
     endif
 
     let target_winnr = ctrlsf#win#FindTargetWindow(a:file)
@@ -210,7 +250,11 @@ func! s:OpenFileInWindow(file, lnum, col, mode, split) abort
 
         if bufname('%') !~# a:file
             if a:split || (&modified && !&hidden)
-                exec 'silent split ' . fnameescape(a:file)
+                if a:split == 2
+                    exec 'silent vertical split ' . fnameescape(a:file)
+                else
+                    exec 'silent split ' . fnameescape(a:file)
+                endif
             else
                 exec 'silent edit ' . fnameescape(a:file)
             endif
@@ -235,7 +279,7 @@ endf
 "
 func! s:OpenFileInTab(file, lnum, col, mode) abort
     if a:mode == 1 && g:ctrlsf_auto_close
-        call ctrlsf#Quit()
+        call s:Quit()
     endif
 
     exec 'silen tabedit ' . fnameescape(a:file)
@@ -253,7 +297,7 @@ endf
 
 " s:PreviewFile()
 "
-func! s:PreviewFile(file, lnum, col) abort
+func! s:PreviewFile(file, lnum, col, follow) abort
     call ctrlsf#preview#OpenPreviewWindow()
 
     if !exists('b:ctrlsf_file') || b:ctrlsf_file !=# a:file
@@ -271,11 +315,32 @@ func! s:PreviewFile(file, lnum, col) abort
         call ctrlsf#hl#HighlightSelectedLine()
     endif
 
-    call ctrlsf#win#FocusMainWindow()
+    if !a:follow
+        call ctrlsf#win#FocusMainWindow()
+    endif
+endf
+
+" s:Quit()
+"
+func! s:Quit() abort
+    call ctrlsf#preview#ClosePreviewWindow()
+    call ctrlsf#win#CloseMainWindow()
 endf
 
 " ClearSelectedLine()
 "
 func! ctrlsf#ClearSelectedLine() abort
     call ctrlsf#hl#ClearSelectedLine()
+endf
+
+" ToggleMap()
+"
+func! ctrlsf#ToggleMap() abort
+    call ctrlsf#buf#ToggleMap()
+
+    if b:ctrlsf_map_enabled
+        echo "Maps enabled."
+    else
+        echo "Maps disabled."
+    endif
 endf

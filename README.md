@@ -69,6 +69,15 @@ ctags --help
 **Javascript Tags**
 If using ctags with javascript, I recommend placing the *.ctags* file I have in the ctags directory in the folder you want to create the tags.
 
+NEW:
+I discocered the jsctags node module which I think works ok. You can download it from:
+
+and then add a custom function to your zsh if you are using node:
+https://github.com/ramitos/jsctags
+```
+find . -type f -iregex ".*\.js$" -not -path "./node_modules/*" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
+```
+
 ## FONT
 Install the [Source Code Pro](https://github.com/adobe-fonts/source-code-pro) font
 

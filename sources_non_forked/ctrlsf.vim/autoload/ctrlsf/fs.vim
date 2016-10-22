@@ -1,8 +1,8 @@
 " ============================================================================
-" Description: An ack/ag powered code search and view tool.
+" Description: An ack/ag/pt/rg powered code search and view tool.
 " Author: Ye Ding <dygvirus@gmail.com>
 " Licence: Vim licence
-" Version: 1.40
+" Version: 1.8.3
 " ============================================================================
 
 " Meta folder of several typical version control systems
@@ -10,10 +10,16 @@ let s:vcs_folder = ['.git', '.hg', '.svn', '.bzr', '_darcs']
 
 " FindVcsRoot()
 "
-func! ctrlsf#fs#FindVcsRoot() abort
+func! ctrlsf#fs#FindVcsRoot(...) abort
+    if a:0 > 0
+        let start_dir = a:1
+    else
+        let start_dir = expand('%:p:h')
+    endif
+
     let vsc_dir = ''
     for vcs in s:vcs_folder
-        let vsc_dir = finddir(vcs, expand('%:p:h').';')
+        let vsc_dir = finddir(vcs, start_dir.';')
         if !empty(vsc_dir)
             break
         endif

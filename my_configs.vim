@@ -84,6 +84,7 @@
 " En este vimrc se mapea a <leader>8
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set ff=unix
 
 " Numeros relativos
 set relativenumber

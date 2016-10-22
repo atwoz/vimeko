@@ -1,8 +1,8 @@
 " ============================================================================
-" Description: An ack/ag powered code search and view tool.
+" Description: An ack/ag/pt/rg powered code search and view tool.
 " Author: Ye Ding <dygvirus@gmail.com>
 " Licence: Vim licence
-" Version: 1.40
+" Version: 1.8.3
 " ============================================================================
 
 " option list of CtrlSF
@@ -13,6 +13,7 @@ let s:option_list = {
     \ '-filetype'   : {'args': 1},
     \ '-filematch'  : {'args': 1},
     \ '-ignorecase' : {'args': 0},
+    \ '-ignoredir'  : {'args': 1},
     \ '-literal'    : {'args': 0},
     \ '-matchcase'  : {'args': 0},
     \ '-regex'      : {'args': 0},
@@ -45,11 +46,11 @@ func! ctrlsf#opt#OptionNames() abort
     return keys(s:option_list)
 endf
 
-" IsOptGiven()
+" HasOpt()
 "
 " Return whether user has given a specific option
 "
-func! ctrlsf#opt#IsOptGiven(name) abort
+func! ctrlsf#opt#HasOpt(name) abort
     return has_key(s:options, a:name)
 endf
 
@@ -74,7 +75,7 @@ func! ctrlsf#opt#GetContext() abort
 
     " user specific
     for opt in ['after', 'before', 'context']
-        if ctrlsf#opt#IsOptGiven(opt)
+        if ctrlsf#opt#HasOpt(opt)
             let options[opt] = ctrlsf#opt#GetOpt(opt)
         endif
     endfo
@@ -111,7 +112,7 @@ endf
 "
 func! ctrlsf#opt#GetCaseSensitive() abort
     for opt in ['matchcase', 'ignorecase', 'smartcase']
-        if ctrlsf#opt#IsOptGiven(opt)
+        if ctrlsf#opt#HasOpt(opt)
             return opt
         endif
     endfo
@@ -142,14 +143,38 @@ func! ctrlsf#opt#GetPath() abort
             endfo
         endfo
     else
-        let path = {
-            \ 'project' : ctrlsf#fs#FindVcsRoot(),
-            \ 'cwd'     : getcwd(),
-            \ }[g:ctrlsf_default_root]
-        " If project root is not found, use current file
-        if empty(path)
-            let path = expand('%:p')
+        let path = ''
+
+        if g:ctrlsf_default_root ==# 'cwd'
+            let path = getcwd()
+        else
+            " default value for 'project'
+            let opt_sroot = 'f'
+            let opt_fbroot = 'f'
+
+            let opt_idx = stridx(g:ctrlsf_default_root, '+')
+            if opt_idx > -1
+                let opt_sroot = strpart(g:ctrlsf_default_root, opt_idx+1, 1)
+                let opt_fbroot = strpart(g:ctrlsf_default_root, opt_idx+2, 1)
+            endif
+
+            " try to find project root
+            if opt_sroot ==# 'f'
+                let path = ctrlsf#fs#FindVcsRoot()
+            elseif opt_sroot ==# 'w'
+                let path = ctrlsf#fs#FindVcsRoot(getcwd())
+            endif
+
+            " fallback to specified root
+            if empty(path)
+                if opt_fbroot ==# 'f'
+                    let path = expand('%:p')
+                elseif opt_fbroot ==# 'w'
+                    let path = getcwd()
+                endif
+            endif
         endif
+
         call add(path_tokens, shellescape(path))
     endif
 
@@ -163,13 +188,23 @@ endf
 " If both of 'literal' and 'regex' are given, prefer 'literal' than 'regex'.
 "
 func! ctrlsf#opt#GetRegex() abort
-    if ctrlsf#opt#IsOptGiven('literal')
+    if ctrlsf#opt#HasOpt('literal')
         return 0
-    elseif ctrlsf#opt#IsOptGiven('regex')
+    elseif ctrlsf#opt#HasOpt('regex')
         return 1
     else
         return g:ctrlsf_regex_pattern
     endif
+endf
+
+" GetIgnoreDir()
+"
+func! ctrlsf#opt#GetIgnoreDir() abort
+    let ignore_dir = copy(g:ctrlsf_ignore_dir)
+    if ctrlsf#opt#HasOpt("ignoredir")
+        call add(ignore_dir, ctrlsf#opt#GetOpt("ignoredir"))
+    endif
+    return ignore_dir
 endf
 
 """""""""""""""""""""""""""""""""
@@ -192,7 +227,7 @@ func! s:ParseOptions(options_str) abort
         if !has_key(s:option_list, token)
             if token =~# '^-'
                 call ctrlsf#log#Error("Unknown option '%s'. If you are user
-                    \ from pre-v1.0, plaese be aware of that CtrlSF no longer
+                    \ from pre-v1.0, please be aware of that CtrlSF no longer
                     \ supports all options of ack and ag since v1.0. Read
                     \ manual for CtrlSF its own options.", token)
                 throw 'ParseOptionsException'

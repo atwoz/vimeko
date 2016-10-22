@@ -1,8 +1,8 @@
 " ============================================================================
-" Description: An ack/ag powered code search and view tool.
+" Description: An ack/ag/pt/rg powered code search and view tool.
 " Author: Ye Ding <dygvirus@gmail.com>
 " Licence: Vim licence
-" Version: 1.40
+" Version: 1.8.3
 " ============================================================================
 
 " s:TranslateRegex()
@@ -36,9 +36,10 @@ func! s:TranslateRegex(pattern) abort
     let pattern = substitute(pattern, '\v\(\?\>(.{-})\)', '(\1)@>', 'g')
 
     " '\b' word boundary
-    let pattern = substitute(pattern, '\\b', '(<|>)', 'g')
+    let pattern = substitute(pattern, '\C\\b', '(<|>)', 'g')
 
-    " TODO:'\B' support
+    " '\B' non-word boundary (just remove it)
+    let pattern = substitute(pattern, '\C\\B', '', 'g')
 
     return pattern
 endf

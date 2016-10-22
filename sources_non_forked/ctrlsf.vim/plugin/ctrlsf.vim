@@ -1,8 +1,8 @@
 " ============================================================================
-" Description: An ack/ag powered code search and view tool.
+" Description: An ack/ag/pt/rg powered code search and view tool.
 " Author: Ye Ding <dygvirus@gmail.com>
 " Licence: Vim licence
-" Version: 1.40
+" Version: 1.8.3
 " ============================================================================
 
 " Loading Guard {{{1
@@ -46,9 +46,9 @@ endf
 " }}}
 
 " s:SearchCwordCmd() {{{2
-func! s:SearchCwordCmd(to_exec)
-    let cmd = ":\<C-U>CtrlSF " . expand('<cword>')
-    let cmd .= a:to_exec ? "\r" : " "
+func! s:SearchCwordCmd(type, to_exec)
+    let cmd = ":\<C-U>" . a:type . " " . expand('<cword>')
+    let cmd .= a:to_exec ? "\<CR>" : " "
     return cmd
 endf
 " }}}
@@ -56,18 +56,18 @@ endf
 " s:SearchVwordCmd() {{{2
 " Within evaluation of a expression typed visual map, we can not get
 " current visual selection normally, so I need to workaround it.
-func! s:SearchVwordCmd(to_exec)
-    let keys = '":\<C-U>CtrlSF " . g:CtrlSFGetVisualSelection()'
-    let keys .= a:to_exec ? '."\r"' : '." "'
-    let cmd = ":\<C-U>call feedkeys(" . keys . ", 'n')\r"
+func! s:SearchVwordCmd(type, to_exec)
+    let keys = '":\<C-U>'. a:type .' " . g:CtrlSFGetVisualSelection()'
+    let keys .= a:to_exec ? '."\<CR>"' : '." "'
+    let cmd = ":\<C-U>call feedkeys(" . keys . ", 'n')\<CR>"
     return cmd
 endf
 " }}}
 
 " s:SearchPwordCmd() {{{2
-func! s:SearchPwordCmd(to_exec)
-    let cmd = ":\<C-U>CtrlSF " . @/
-    let cmd .= a:to_exec ? "\r" : " "
+func! s:SearchPwordCmd(type, to_exec)
+    let cmd = ":\<C-U>" . a:type . " " . @/
+    let cmd .= a:to_exec ? "\<CR>" : " "
     return cmd
 endf
 " }}}
@@ -97,6 +97,12 @@ if !exists('g:ctrlsf_confirm_save')
     let g:ctrlsf_confirm_save = 1
 endif
 " }}}
+"
+" g:ctrlsf_confirm_unsaving_quit {{{2
+if !exists('g:ctrlsf_confirm_unsaving_quit')
+    let g:ctrlsf_confirm_unsaving_quit = 1
+endif
+" }}}
 
 " g:ctrlsf_context {{{2
 if !exists('g:ctrlsf_context')
@@ -116,6 +122,18 @@ if !exists('g:ctrlsf_default_root')
 endif
 " }}}
 
+" g:ctrlsf_extra_backend_args {{{2
+if !exists('g:ctrlsf_extra_backend_args')
+    let g:ctrlsf_extra_backend_args = {}
+endif
+" }}}
+
+" g:ctrlsf_ignore_dir {{{2
+if !exists('g:ctrlsf_ignore_dir')
+    let g:ctrlsf_ignore_dir = []
+endif
+" }}}
+
 " g:ctrlsf_indent {{{2
 if !exists('g:ctrlsf_indent')
     let g:ctrlsf_indent = 4
@@ -127,9 +145,11 @@ let s:default_mapping = {
     \ "open"    : ["<CR>", "o"],
     \ "openb"   : "O",
     \ "split"   : "<C-O>",
+    \ "vsplit"  : "",
     \ "tab"     : "t",
     \ "tabb"    : "T",
     \ "popen"   : "p",
+    \ "popenf"  : "P",
     \ "quit"    : "q",
     \ "next"    : "<C-J>",
     \ "prev"    : "<C-K>",
@@ -180,6 +200,12 @@ if !exists('g:ctrlsf_selected_line_hl')
 endif
 " }}}
 
+" g:ctrlsf_toggle_map_key {{{2
+if !exists('g:ctrlsf_toggle_map_key')
+    let g:ctrlsf_toggle_map_key = ''
+endif
+" }}}
+
 " g:ctrlsf_winsize {{{2
 if !exists('g:ctrlsf_winsize')
     if exists('g:ctrlsf_width')
@@ -191,22 +217,31 @@ endif
 " }}}
 
 " Commands {{{1
-com! -n=* -comp=customlist,ctrlsf#comp#Completion CtrlSF        call ctrlsf#Search(<q-args>)
-com! -n=0                                         CtrlSFOpen    call ctrlsf#Open()
-com! -n=0                                         CtrlSFUpdate  call ctrlsf#Update()
-com! -n=0                                         CtrlSFClose   call ctrlsf#Quit()
-com! -n=0                                         CtrlSFClearHL call ctrlsf#ClearSelectedLine()
-com! -n=0                                         CtrlSFToggle  call ctrlsf#Toggle()
+com! -n=* -comp=customlist,ctrlsf#comp#Completion CtrlSF         call ctrlsf#Search(<q-args>, 0)
+com! -n=* -comp=customlist,ctrlsf#comp#Completion CtrlSFQuickfix call ctrlsf#Search(<q-args>, 1)
+com! -n=0                                         CtrlSFOpen     call ctrlsf#Open()
+com! -n=0                                         CtrlSFUpdate   call ctrlsf#Update()
+com! -n=0                                         CtrlSFClose    call ctrlsf#Quit()
+com! -n=0                                         CtrlSFClearHL  call ctrlsf#ClearSelectedLine()
+com! -n=0                                         CtrlSFToggle   call ctrlsf#Toggle()
 " }}}
 
 " Maps {{{1
-nnoremap        <Plug>CtrlSFPrompt    :CtrlSF<Space>
-nnoremap <expr> <Plug>CtrlSFCwordPath <SID>SearchCwordCmd(0)
-nnoremap <expr> <Plug>CtrlSFCwordExec <SID>SearchCwordCmd(1)
-vnoremap <expr> <Plug>CtrlSFVwordPath <SID>SearchVwordCmd(0)
-vnoremap <expr> <Plug>CtrlSFVwordExec <SID>SearchVwordCmd(1)
-nnoremap <expr> <Plug>CtrlSFPwordPath <SID>SearchPwordCmd(0)
-nnoremap <expr> <Plug>CtrlSFPwordExec <SID>SearchPwordCmd(1)
+nnoremap                 <Plug>CtrlSFPrompt    :CtrlSF<Space>
+nnoremap          <expr> <Plug>CtrlSFCwordPath <SID>SearchCwordCmd('CtrlSF', 0)
+nnoremap <silent> <expr> <Plug>CtrlSFCwordExec <SID>SearchCwordCmd('CtrlSF', 1)
+vnoremap          <expr> <Plug>CtrlSFVwordPath <SID>SearchVwordCmd('CtrlSF', 0)
+vnoremap <silent> <expr> <Plug>CtrlSFVwordExec <SID>SearchVwordCmd('CtrlSF', 1)
+nnoremap          <expr> <Plug>CtrlSFPwordPath <SID>SearchPwordCmd('CtrlSF', 0)
+nnoremap <silent> <expr> <Plug>CtrlSFPwordExec <SID>SearchPwordCmd('CtrlSF', 1)
+
+nnoremap                 <Plug>CtrlSFQuickfixPrompt    :CtrlSFQuickfix<Space>
+nnoremap          <expr> <Plug>CtrlSFQuickfixCwordPath <SID>SearchCwordCmd('CtrlSFQuickfix', 0)
+nnoremap <silent> <expr> <Plug>CtrlSFQuickfixCwordExec <SID>SearchCwordCmd('CtrlSFQuickfix', 1)
+vnoremap          <expr> <Plug>CtrlSFQuickfixVwordPath <SID>SearchVwordCmd('CtrlSFQuickfix', 0)
+vnoremap <silent> <expr> <Plug>CtrlSFQuickfixVwordExec <SID>SearchVwordCmd('CtrlSFQuickfix', 1)
+nnoremap          <expr> <Plug>CtrlSFQuickfixPwordPath <SID>SearchPwordCmd('CtrlSFQuickfix', 0)
+nnoremap <silent> <expr> <Plug>CtrlSFQuickfixPwordExec <SID>SearchPwordCmd('CtrlSFQuickfix', 1)
 " }}}
 
 " modeline {{{1

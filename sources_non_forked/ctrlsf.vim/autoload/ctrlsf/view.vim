@@ -1,8 +1,8 @@
 " ============================================================================
-" Description: An ack/ag powered code search and view tool.
+" Description: An ack/ag/pt/rg powered code search and view tool.
 " Author: Ye Ding <dygvirus@gmail.com>
 " Licence: Vim licence
-" Version: 1.40
+" Version: 1.8.3
 " ============================================================================
 
 func! s:Summary(resultset) abort
@@ -82,33 +82,43 @@ endf
 "
 func! ctrlsf#view#Reflect(vlnum) abort
     let resultset = ctrlsf#db#ResultSet()
+    return s:BSearch(resultset, 0, len(resultset) - 1, a:vlnum)
+endf
 
-    " TODO: use binary search for better performance
+func! s:BSearch(resultset, left, right, vlnum) abort
+    " case: not found
+    if a:left > a:right
+        return ['', {}, {}]
+    endif
+
+    let pivot = (a:left + a:right) / 2
+    let par = a:resultset[pivot]
+
+    " case: less than pivot
+    if a:vlnum < par.vlnum()
+        return s:BSearch(a:resultset, a:left, pivot - 1, a:vlnum)
+    endif
+
+    " case: greater than pivot
+    if a:vlnum > par.vlnum() + par.range() - 1
+        return s:BSearch(a:resultset, pivot + 1, a:right, a:vlnum)
+    endif
+
+    " case: found
     let ret = ['', {}, {}]
-    for par in resultset
-        if a:vlnum < par.vlnum()
-            break
-        endif
 
-        " if there is a corresponding line
-        if a:vlnum <= par.vlnum() + par.range() - 1
-            " fetch file
-            let ret[0] = par.filename
+    " fetch file
+    let ret[0] = par.filename
 
-            " fetch line object
-            let line = par.lines[a:vlnum - par.vlnum()]
-            let ret[1] = line
+    " fetch line object
+    let line = par.lines[a:vlnum - par.vlnum()]
+    let ret[1] = line
 
-            " fetch match object
-            if line.matched()
-                let ret[2] = line.match
-            endif
+    " fetch match object
+    if line.matched()
+        let ret[2] = line.match
+    endif
 
-            break
-        endif
-    endfo
-
-    call ctrlsf#log#Debug("Reflect: vlnum: %s, result: %s", a:vlnum, string(ret))
     return ret
 endf
 

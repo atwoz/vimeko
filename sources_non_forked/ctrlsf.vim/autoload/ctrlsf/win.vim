@@ -1,8 +1,8 @@
 " ============================================================================
-" Description: An ack/ag powered code search and view tool.
+" Description: An ack/ag/pt/rg powered code search and view tool.
 " Author: Ye Ding <dygvirus@gmail.com>
 " Licence: Vim licence
-" Version: 1.40
+" Version: 1.8.3
 " ============================================================================
 
 " ctrlsf buffer's name
@@ -56,12 +56,12 @@ func! ctrlsf#win#OpenMainWindow() abort
           \ 'top'    : 'topleft',  'left'  : 'topleft vertical',
           \ 'bottom' : 'botright', 'right' : 'botright vertical'}
           \[g:ctrlsf_position] . ' '
-    exec 'silent keepalt ' . openpos . winsize . 'split ' . '__CtrlSF__'
+    exec 'silent keepalt ' . openpos . winsize . 'split ' . (bufnr('__CtrlSF__') != -1 ? '+b'.bufnr('__CtrlSF__') : '__CtrlSF__')
 
     call s:InitMainWindow()
 
     " resize other windows
-    wincmd =
+    call s:ResizeNeighborWins()
 endf
 
 " Draw()
@@ -87,8 +87,21 @@ func! ctrlsf#win#CloseMainWindow() abort
     call ctrlsf#win#FocusCallerWindow()
 endf
 
+" ResizeNeighborWins()
+"
+func! s:ResizeNeighborWins() abort
+    setl winfixwidth
+    setl winfixheight
+    wincmd =
+endf
+
 " InitMainWindow()
 func! s:InitMainWindow() abort
+    if exists("b:ctrlsf_initialized")
+        return
+    endif
+
+    " option
     setl filetype=ctrlsf
     setl fileformat=unix
     setl fileencoding=utf-8
@@ -108,21 +121,15 @@ func! s:InitMainWindow() abort
     setl nofoldenable
 
     " map
-    " key 'prevw' is a deprecated key but here for backward compatibility
-    let act_func_ref = {
-        \ "open"  : "ctrlsf#JumpTo('open')",
-        \ "openb" : "ctrlsf#JumpTo('open_background')",
-        \ "split" : "ctrlsf#JumpTo('split')",
-        \ "tab"   : "ctrlsf#JumpTo('tab')",
-        \ "tabb"  : "ctrlsf#JumpTo('tab_background')",
-        \ "prevw" : "ctrlsf#JumpTo('preview')",
-        \ "popen" : "ctrlsf#JumpTo('preview')",
-        \ "quit"  : "ctrlsf#Quit()",
-        \ "next"  : "ctrlsf#NextMatch(1)",
-        \ "prev"  : "ctrlsf#NextMatch(0)",
-        \ "llist" : "ctrlsf#OpenLocList()",
-        \ }
-    call ctrlsf#utils#SetMap(g:ctrlsf_mapping, act_func_ref)
+    call ctrlsf#buf#ToggleMap(1)
+
+    if !empty(g:ctrlsf_toggle_map_key)
+        exec 'nnoremap <silent><buffer> ' . g:ctrlsf_toggle_map_key
+            \ ' :CtrlSFToggleMap<CR>'
+    endif
+
+    " cmd
+    command! -buffer CtrlSFToggleMap call ctrlsf#ToggleMap()
 
     " autocmd
     augroup ctrlsf
@@ -130,6 +137,13 @@ func! s:InitMainWindow() abort
         au BufWriteCmd         <buffer> call ctrlsf#Save()
         au BufHidden,BufUnload <buffer> call ctrlsf#buf#UndoAllChanges()
     augroup END
+
+    " hook for user customization
+    if exists("*g:CtrlSFAfterMainWindowInit")
+        silent! call g:CtrlSFAfterMainWindowInit()
+    end
+
+    let b:ctrlsf_initialized = 1
 endf
 
 
